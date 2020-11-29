@@ -2,4 +2,5 @@
 
 console.log('Run')
 
-import '../dist/esbundle.js'
+// import '../dist/esbundle.js'
+import '../src/index.js'

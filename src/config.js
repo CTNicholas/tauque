@@ -4,9 +4,19 @@ import defaultConfig from './config.default.js'
 import state from './state.js'
 
 export default async function () {
+  state.reset()
+  const customConfig = getConfig()
+  customConfig.forEach(conf => state.config.push({...defaultConfig, ...conf}))
+  state.config.forEach(conf => {
+    if (!state.watchDirs.includes(conf.watchDir)) {
+      state.watchDirs.push(conf.watchDir)
+    }
+  })
+}
+
+function getConfig () {
   let customConfig = []
   const customConfigPath = path.resolve(process.cwd(), 'esbundle.json')
-
   try {
     if (fs.existsSync(customConfigPath)) {
       let jsonData = JSON.parse(fs.readFileSync(customConfigPath))
@@ -21,7 +31,5 @@ export default async function () {
   } catch (err) {
     console.warn('Error in esbundle.json file, using defaults', err)
   }
-
-  customConfig.forEach(conf => state.config.push({...defaultConfig, ...conf}))
-  console.log('config:', state.config)
+  return customConfig
 }

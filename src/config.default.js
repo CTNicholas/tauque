@@ -6,7 +6,7 @@ export default {
   source: 'src/index.js',
 
   // 'node' or 'browser'
-  platform: 'node',
+  platform: 'browser',
 
   // Output directory
   outputDir: 'dist',
@@ -25,4 +25,7 @@ export default {
 
   // Directory to watch for changes while running dev mode
   watchDir: 'src',
+
+  // Settings to apply to esbuild
+  esbuild: {}
 }
