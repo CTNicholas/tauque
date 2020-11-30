@@ -17,6 +17,7 @@ export default async function () {
   const bundles = buildBundles()
   return Promise.all(bundles).then(warnings => {
     state.buildTime = performance.now() - buildStart
+    state.buildCount++
     message.built()
     message.warnings(warnings)
     return warnings

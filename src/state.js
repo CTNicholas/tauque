@@ -7,6 +7,7 @@ const defaultState = () => ({
   watchDirs: [],
   watchers: [],
   closing: false,
+  buildCount: 0,
   buildTime: 0,
   buildNames: []
 })

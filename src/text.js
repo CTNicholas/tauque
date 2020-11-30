@@ -3,8 +3,9 @@ import c from 'ansi-colors'
 function getWords () {
   return {
     building: 'Building..',
-    built: c.bold.greenBright('Bundled'),
-    change: c.bold.blueBright('Change'),
+    dist: c.bold.cyanBright('Distribute files'),
+    built: c.bold.greenBright('Package bundled'),
+    change: c.bold.blueBright('File change '),
     configChange: c.bold.yellowBright('Config updated')
   }
 }
@@ -14,6 +15,7 @@ function getSymbols () {
     divider: c.dim('_____________________________________'),
     logo: c.bgBlue.bold(' esbundle '),
     building: c.yellowBright('~'),
+    dist: c.cyanBright('►'),
     built: c.greenBright('√'),
     change: c.blueBright('»'),
     configChange: c.yellowBright('☼')
