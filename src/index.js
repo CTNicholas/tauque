@@ -11,7 +11,6 @@ async function start () {
   message.gettingConfig()
   await setConfig()
   const res = await build()
-  console.log('\nAll built\n')
   if (state.mode === 'dev') {
     watch(start)
   }
@@ -26,3 +25,5 @@ start()
 function getMode () {
   return process.argv.includes('--dev') ? 'dev' : 'build'
 }
+
+process.on('SIGINT', () => process.exit())

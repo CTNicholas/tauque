@@ -6,7 +6,9 @@ const defaultState = () => ({
   config: [],
   watchDirs: [],
   watchers: [],
-  closing: false
+  closing: false,
+  buildTime: 0,
+  buildNames: []
 })
 
 // State of current runtime, initialised to defaultState

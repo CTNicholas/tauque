@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import defaultConfig from './config.default.js'
 import state from './state.js'
+import message from './message.js'
 
 export default async function () {
   state.reset()
@@ -26,10 +27,10 @@ function getConfig () {
         customConfig.push(jsonData)
       }
     } else {
-      console.warn('No esbundle.json file found, using defaults')
+      message.warn('No esbundle.json file found, using defaults')
     }
   } catch (err) {
-    console.warn('Error in esbundle.json file, using defaults', err)
+    message.warn('Error in esbundle.json file, using defaults', err)
   }
   return customConfig
 }

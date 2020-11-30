@@ -1,4 +1,5 @@
 import path from 'path'
+import { performance } from 'perf_hooks'
 import esbuild from 'esbuild'
 import state from './state.js'
 import message from './message.js'
@@ -11,8 +12,11 @@ import message from './message.js'
  */
 export default async function () {
   message.building()
+  state.buildNames = []
+  const buildStart = performance.now()
   const bundles = buildBundles()
   return Promise.all(bundles).then(warnings => {
+    state.buildTime = performance.now() - buildStart
     message.built()
     message.warnings(warnings)
     return warnings
@@ -46,9 +50,12 @@ function buildBundles () {
  * @returns {Promise<Object>}
  */
 function buildSingle (conf, pkgType = '') {
+  const outfile = path.join(conf.outputDir, `${conf.name}${pkgType}.js`)
+  //state.buildNames.push(`${conf.name}${pkgType}.js`)
+  state.buildNames.push(outfile)
   return esbuild.build({
     entryPoints: [conf.source],
-    outfile: path.join(conf.outputDir, `${conf.name}${pkgType}.js`),
+    outfile: outfile,
     bundle: true,
     platform: conf.platform,
     minify: conf.minify,

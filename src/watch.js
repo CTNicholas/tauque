@@ -19,7 +19,6 @@ async function watchDirectories () {
       }
 
       message.change(name, evt)
-      console.log('File change:', name, evt)
       buildResult = await build()
     })
     state.watchers.push(dirWatcher)

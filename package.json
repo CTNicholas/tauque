@@ -14,7 +14,9 @@
   "keywords": [],
   "description": "",
   "dependencies": {
-    "chalk": "^4.1.0",
+    "ansi-colors": "^4.1.1",
+    "ansi-escapes": "^4.3.1",
+    "enquirer": "^2.3.6",
     "esbuild": "^0.8.16",
     "node-watch": "^0.7.0"
   }
