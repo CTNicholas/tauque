@@ -12,7 +12,7 @@ import message from './message.js'
  */
 export default async function () {
   message.building()
-  state.buildNames = []
+  state.resetBuild()
   const buildStart = performance.now()
   const bundles = buildBundles()
   return Promise.all(bundles).then(warnings => {
@@ -52,8 +52,7 @@ function buildBundles () {
  */
 function buildSingle (conf, pkgType = '') {
   const outfile = path.join(conf.outputDir, `${conf.name}${pkgType}.js`)
-  //state.buildNames.push(`${conf.name}${pkgType}.js`)
-  state.buildNames.push(outfile)
+  state.addFile(outfile)
   return esbuild.build({
     entryPoints: [conf.source],
     outfile: outfile,

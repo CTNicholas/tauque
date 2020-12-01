@@ -1,4 +1,5 @@
 import path from 'path'
+import fs from 'fs'
 import c from 'ansi-colors'
 import cmd from 'ansi-escapes'
 import state from './state.js'
@@ -13,7 +14,7 @@ function opening () {
   stage = 'opening'
   writeLine('', s.divider)
   writeLine()
-  writeLine(s.logo)
+  writeLine(w.logo, s.logo)
   writeLine()
 }
 
@@ -36,19 +37,18 @@ function building () {
 
 function built () {
   stage = 'built'
+  const bundleTime = Math.floor(state.buildTime)
+
   updateLine(w.dist, s.dist)
-  state.buildNames.forEach(name => writeLine(name))
+  state.buildFiles.forEach(file => {
+    const size = (file.size / 1024).toFixed(2)
+    writeLine(file.path + c.gray(` ${size} KiB`))
+  })
   writeLine()
 
-  const bundleTime = Math.floor(state.buildTime)
-  const currTime = new Date(Date.now()).toLocaleTimeString()
-  //writeLine(`${currTime}, ${bundleTime}ms`)
-  writeLine(w.built, s.built)
-  //writeLine(w.built + c.dim(` (${bundleTime}ms)`), s.built)
-  //writeLine(`${currTime}, (${bundleTime}ms)`)
 
-  //writeLine(c.dim(`Bundled at ${currTime} in ${bundleTime}ms`))
-  //writeLine('', s.divider)
+  writeLine(w.built, s.built)
+  writeLine(`Build ${state.buildCount} ` + c.gray(bundleTime + 'ms'))
 
 }
 
@@ -58,11 +58,12 @@ function distribution () {
 }
 
 function change (name, evt) {
+  const currTime = new Date(Date.now()).toLocaleTimeString()
   const fileName = path.parse(name).base
   eraseAll()
   opening()
   writeLine(w.change, s.change)
-  writeLine(`${fileName}`)
+  writeLine(`${fileName}` + ' ' + c.gray(currTime))
   writeLine()
 }
 
@@ -121,9 +122,4 @@ function writeLine (msg = '', prefix = ' ') {
 
 function updateLine (msg = '', prefix = ' ') {
   process.stdout.write(cmd.eraseLines(2) + prefix + ' ' + msg + '\n')
-}
-
-function writeDivider () {
-  process.stdout.write(s.divider)
-  lineCount++
 }

@@ -2,6 +2,7 @@ import c from 'ansi-colors'
 
 function getWords () {
   return {
+    logo: c.bold.bgMagenta(' Τauque bundler '),
     building: 'Building..',
     dist: c.bold.cyanBright('Distribute files'),
     built: c.bold.greenBright('Package bundled'),
@@ -12,8 +13,8 @@ function getWords () {
 
 function getSymbols () {
   return {
-    divider: c.dim('_____________________________________'),
-    logo: c.bgBlue.bold(' esbundle '),
+    divider: c.gray('__________________________________________'),
+    logo: c.bold.magentaBright(' '),
     building: c.yellowBright('~'),
     dist: c.cyanBright('►'),
     built: c.greenBright('√'),
