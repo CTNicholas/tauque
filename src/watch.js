@@ -35,6 +35,7 @@ function watchConfigFile (restart) {
     message.configChange()
     state.closing = true
     state.watchers.forEach(watcher => watcher.close())
+    state.reset()
     message.restarting()
     restart()
   })

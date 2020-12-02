@@ -31,12 +31,18 @@ export default async function () {
  */
 function buildBundles () {
   return state.config.reduce((res, conf) => {
-    if (conf.types && conf.types.length) {
-      const multipleBundles = conf.types.map((pkgType, index) => {
-        return buildSingle(conf, index === 0 ? '' : `.${pkgType}`)
-      })
-      return [...res, ...multipleBundles]
+    const formats = {
+      node: 'cjs',
+      browser: 'iife',
+      module: 'esm'
     }
+    if (conf.platform === 'all') {
+      const bundles = Object.entries(formats).map(([key, val]) => {
+        return buildSingle(conf, key, val)
+      })
+      return [...res, ...bundles]
+    }
+
 
     return [...res, buildSingle(conf)]
   }, [])
@@ -48,24 +54,45 @@ function buildBundles () {
  * Anything passed to conf.esbuild will override any other settings
  * @param conf - The configuration object
  * @param pkgType - The package type, to be added to the file name, ie .umd: package.umd.js
+ * @param formatType - The package type, to be added to the file name, ie .umd: package.umd.js
  * @returns {Promise<Object>}
  */
-function buildSingle (conf, pkgType = '') {
+function buildSingle (conf, pkgType = '', formatType = '') {
   const fileExt = conf.source && conf.source.endsWith('.css') ? 'css' : 'js'
-  const outfile = path.join(conf.outputDir, `${conf.name}${pkgType}.${fileExt}`)
+  const outfile = path.join(conf.outputDir, `${conf.name}${pkgType ? '.' + pkgType : ''}.${fileExt}`)
+
+  const cachedFile = state.getCache(outfile)
+
+  if (cachedFile !== null) {
+    return cachedFile.rebuild().then(result => {
+      state.addFile(outfile, result)
+      return result
+    })
+  }
+
+  let platform = pkgType || conf.platform
+  let format = formatType || undefined
+
+  if (pkgType === 'module' || conf.platform === 'module') {
+    platform = 'browser'
+    format = 'esm'
+  }
+
   return esbuild.build({
     entryPoints: [conf.source],
     outfile: outfile,
     bundle: true,
-    platform: conf.platform,
+    platform: platform,
+    format: format,
     globalName: conf.globalName.length ? conf.globalName : undefined,
     minify: conf.minify,
     sourcemap: conf.sourcemap,
     target: conf.target.length ? conf.target : undefined,
     logLevel: 'error',
+    incremental: true,
     ...conf.esbuild
   }).then(result => {
-    state.addFile(outfile)
+    state.addFile(outfile, result)
     return result
   })
 }

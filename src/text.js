@@ -11,6 +11,7 @@ function getWords () {
     dist: c.bold.cyanBright('Files bundled'),
     built: c.bold.greenBright('Complete'),
     buildCount: 'Build ',
+    initialBuild: 'Initial build ',
     change: c.bold.blueBright('File change'),
     configChange: c.bold.yellow('Config updated'),
     noConfig: c.bold.gray('No config file (tauque.json), using default settings'),

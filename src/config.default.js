@@ -8,8 +8,8 @@ export default {
   // 'iife' / 'cjs' / 'esm'
   //types: ['iife', 'cjs', 'esm'],
 
-  // 'node' / 'browser' / 'both'
-  platform: 'node',
+  // 'node' / 'browser' / 'module' / 'all'
+  platform: 'all',
 
   // Global name, only applies to iife
   globalName: '',

@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 import prompts from 'prompts'
 
+/*
+Need to get name and main file from package.json
+global name can be same as package name?
+*/
+
 console.log('Prompts running...')
 
 ;(async () => {

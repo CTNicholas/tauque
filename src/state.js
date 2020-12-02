@@ -12,21 +12,32 @@ const defaultState = () => ({
   closing: false,
   buildCount: 0,
   buildTime: 0,
-  buildFiles: []
+  buildFiles: [],
+  buildCache: {}
 })
 
 // State of current runtime, initialised to defaultState
 export default {
   ...defaultState(),
 
+  getCache (filePath) {
+    if (Object.keys(this.buildCache).includes(filePath)) {
+      return this.buildCache[filePath]
+    }
+    return null
+  },
+
   // Adds files to buildFiles
-  addFile (filePath) {
+  addFile (filePath, compileBuild) {
     const stats = fs.statSync(filePath)
     this.buildFiles.push({
       ...path.parse(filePath),
       path: filePath,
       size: stats.size
     })
+    if (this.getCache(filePath) === null) {
+      this.buildCache[filePath] = compileBuild
+    }
   },
 
   // Resets state for new build

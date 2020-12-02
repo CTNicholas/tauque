@@ -45,7 +45,11 @@ function built () {
   })
   writeLine()
   writeLine(w.built, s.built)
-  writeLine(w.buildCount + `${state.buildCount} ` + c.gray(bundleTime + 'ms'))
+  if (state.buildCount === 1) {
+    writeLine(w.initialBuild + c.gray(bundleTime + 'ms'))
+  } else {
+    writeLine(w.buildCount + `${state.buildCount} ` + c.gray(bundleTime + 'ms'))
+  }
 }
 
 function distribution () {
