@@ -17,7 +17,7 @@ export default async function () {
 
 function getConfig () {
   let customConfig = []
-  const customConfigPath = path.resolve(process.cwd(), 'esbundle.json')
+  const customConfigPath = path.resolve(process.cwd(), 'tauque.json')
   try {
     if (fs.existsSync(customConfigPath)) {
       let jsonData = JSON.parse(fs.readFileSync(customConfigPath))
@@ -27,10 +27,30 @@ function getConfig () {
         customConfig.push(jsonData)
       }
     } else {
-      message.warn('No esbundle.json file found, using defaults')
+      message.noConfig('No tauque.json file found, using defaults')
     }
   } catch (err) {
-    message.warn('Error in esbundle.json file, using defaults', err)
+    message.warn('Error in tauque.json file, using defaults', err)
+  }
+  return customConfig
+}
+
+function importConfig () {
+  let customConfig = []
+  const customConfigPath = './tauque.config.js'
+  try {
+    if (fs.existsSync(customConfigPath)) {
+      const importedConfig = import(customConfigPath)
+      if (Array.isArray(importedConfig)) {
+        customConfig = [...customConfig]
+      } else {
+        customConfig.push(importedConfig)
+      }
+    } else {
+      message.noConfig()
+    }
+  } catch (err) {
+    message.configError(err)
   }
   return customConfig
 }

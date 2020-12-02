@@ -51,16 +51,21 @@ function buildBundles () {
  * @returns {Promise<Object>}
  */
 function buildSingle (conf, pkgType = '') {
-  const outfile = path.join(conf.outputDir, `${conf.name}${pkgType}.js`)
-  state.addFile(outfile)
+  const fileExt = conf.source && conf.source.endsWith('.css') ? 'css' : 'js'
+  const outfile = path.join(conf.outputDir, `${conf.name}${pkgType}.${fileExt}`)
   return esbuild.build({
     entryPoints: [conf.source],
     outfile: outfile,
     bundle: true,
     platform: conf.platform,
+    globalName: conf.globalName.length ? conf.globalName : undefined,
     minify: conf.minify,
     sourcemap: conf.sourcemap,
     target: conf.target.length ? conf.target : undefined,
+    logLevel: 'error',
     ...conf.esbuild
+  }).then(result => {
+    state.addFile(outfile)
+    return result
   })
 }

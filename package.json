@@ -1,8 +1,8 @@
 {
-  "name": "esbundle",
+  "name": "tauque",
   "version": "1.0.0",
   "main": "src/index.js",
-  "bin": "bin/run.mjs",
+  "bin": "bin/install.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,8 +16,8 @@
   "dependencies": {
     "ansi-colors": "^4.1.1",
     "ansi-escapes": "^4.3.1",
-    "enquirer": "^2.3.6",
     "esbuild": "^0.8.16",
-    "node-watch": "^0.7.0"
+    "node-watch": "^0.7.0",
+    "prompts": "^2.4.0"
   }
 }

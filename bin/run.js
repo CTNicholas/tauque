@@ -1,6 +1,4 @@
 #!/usr/bin/env node
 
-console.log('Run')
-
-// import '../dist/esbundle.js'
-import '../src/index.js'
+// import '../src/index.js'
+import './install_old.js'

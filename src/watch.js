@@ -27,7 +27,7 @@ async function watchDirectories () {
 }
 
 function watchConfigFile (restart) {
-  const configWatcher = watch(path.join(process.cwd(), 'esbundle.json'), {}, () => {
+  const configWatcher = watch(path.join(process.cwd(), 'tauque.json'), {}, () => {
     if (state.closing) {
       return null
     }

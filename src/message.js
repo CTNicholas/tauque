@@ -12,7 +12,7 @@ const w = getWords()
 
 function opening () {
   stage = 'opening'
-  writeLine('', s.divider)
+  writeDivider()
   writeLine()
   writeLine(w.logo, s.logo)
   writeLine()
@@ -38,18 +38,14 @@ function building () {
 function built () {
   stage = 'built'
   const bundleTime = Math.floor(state.buildTime)
-
   updateLine(w.dist, s.dist)
   state.buildFiles.forEach(file => {
     const size = (file.size / 1024).toFixed(2)
     writeLine(file.path + c.gray(` ${size} KiB`))
   })
   writeLine()
-
-
   writeLine(w.built, s.built)
-  writeLine(`Build ${state.buildCount} ` + c.gray(bundleTime + 'ms'))
-
+  writeLine(w.buildCount + `${state.buildCount} ` + c.gray(bundleTime + 'ms'))
 }
 
 function distribution () {
@@ -74,24 +70,43 @@ function configChange () {
   writeLine()
 }
 
+function noConfig () {
+  writeLine(w.noConfig, s.noConfig)
+  writeLine()
+}
+
 function warn (msg) {
-  writeLine(msg)
+  writeLine(c.yellow(msg), s.warn)
+  writeLine()
 }
 
 function error (msg) {
-  writeLine(msg)
+  writeLine(c.redBright(msg), s.error)
+  writeLine()
 }
 
 /**
  * After build, outputs any warnings passed by esbuild
- * @param warnings
+ * @param esbuildObj
  */
-function warnings (warnings) {
+function warnings (esbuildObj) {
   stage = 'warning'
-  for (const warn of warnings) {
-    if (warn.warnings && warn.warnings.length) {
-      writeLine('Warning:')
-      warn.warnings.forEach(w => writeLine(w))
+  for (const warn of esbuildObj) {
+    const warnObj = warn.warnings
+    if (warnObj && warnObj.length) {
+      writeLine()
+      writeLine(w.warning, s.warn)
+      warnObj.forEach(singleWarn => {
+        const location = singleWarn.location
+        const line = 'Line: ' + c.yellowBright(location.line)
+        const column = 'Column: ' + c.yellowBright(location.column)
+        const length = 'Length: ' + c.yellowBright(location.length)
+        writeLine('File: ' + c.greenBright(location.file) + `, ${line}, ${column}, ${length}`)
+        writeLine('Code: ')
+        writeLine(c.gray(' | ') + c.greenBright(location.lineText))
+        writeLine('Problem: ')
+        writeLine(c.gray(' | ') + c.greenBright(singleWarn.text))
+      })
     }
   }
 }
@@ -106,6 +121,7 @@ export default {
   warnings,
   change,
   configChange,
+  noConfig,
   warn,
   error
 }
@@ -122,4 +138,8 @@ function writeLine (msg = '', prefix = ' ') {
 
 function updateLine (msg = '', prefix = ' ') {
   process.stdout.write(cmd.eraseLines(2) + prefix + ' ' + msg + '\n')
+}
+
+function writeDivider () {
+  process.stdout.write(s.divider + '\n')
 }
