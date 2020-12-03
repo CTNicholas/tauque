@@ -131,7 +131,7 @@ export default {
 }
 
 function eraseAll () {
-  writeLine(cmd.eraseLines(lineCount + 2))
+  writeLine(cmd.eraseLines(lineCount + 3))
   lineCount = 0
 }
 
