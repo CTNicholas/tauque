@@ -13,6 +13,7 @@ const defaultState = () => ({
   watchDirs: [],
   watchers: [],
   closing: false,
+  waiting: false,
   buildCount: 0,
   buildTime: 0,
   buildFiles: [],
@@ -43,6 +44,12 @@ export default {
         this.watchDirs.push(conf.watchDir)
       }
     })
+
+    const names = this.config.map(conf => conf.name)
+    if (new Set(names).size !== names.length) {
+      message.error('Error: Duplicate "name" properties in tauque.json. Fix and save config file.')
+      this.waiting = true
+    }
   },
 
   // Returns esbuild from cache if exists, otherwise null

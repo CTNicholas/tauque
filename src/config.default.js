@@ -1,6 +1,6 @@
 export default {
   // Final file name
-  name: 'package',
+  name: 'packageName',
 
   // Location of file to transform
   source: 'src/index.js',
@@ -12,7 +12,7 @@ export default {
   platform: 'all',
 
   // Global name, only applies to iife
-  globalName: '',
+  global: '',
 
   // Output directory
   outputDir: 'dist',

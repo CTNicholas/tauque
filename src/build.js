@@ -11,6 +11,10 @@ import message from './message.js'
  * @returns {Promise<Object>} - Warnings returned from esbuild
  */
 export default async function () {
+  if (state.waiting === true) {
+    return null
+  }
+
   message.building()
   state.resetBuild()
   const buildStart = performance.now()
@@ -54,13 +58,14 @@ function buildBundles () {
  * Anything passed to conf.esbuild will override any other settings
  * @param conf - The configuration object
  * @param pkgType - The package type, to be added to the file name, ie .umd: package.umd.js
- * @param formatType - The package type, to be added to the file name, ie .umd: package.umd.js
+ * @param formatType - The format type, to be added to the file name, ie .umd: package.umd.js
  * @returns {Promise<Object>}
  */
 function buildSingle (conf, pkgType = '', formatType = '') {
   const fileExt = conf.source && conf.source.endsWith('.css') ? 'css' : 'js'
   const outfile = path.join(conf.outputDir, `${conf.name}${pkgType ? '.' + pkgType : ''}.${fileExt}`)
 
+  /*
   const cachedFile = state.getCache(outfile)
 
   if (cachedFile !== null) {
@@ -69,6 +74,8 @@ function buildSingle (conf, pkgType = '', formatType = '') {
       return result
     })
   }
+
+   */
 
   let platform = pkgType || conf.platform
   let format = formatType || undefined
@@ -84,12 +91,12 @@ function buildSingle (conf, pkgType = '', formatType = '') {
     bundle: true,
     platform: platform,
     format: format,
-    globalName: conf.globalName.length ? conf.globalName : undefined,
+    globalName: conf.global.length ? conf.global : undefined,
     minify: conf.minify,
     sourcemap: conf.sourcemap,
     target: conf.target.length ? conf.target : undefined,
     logLevel: 'error',
-    incremental: true,
+    //incremental: true,
     ...conf.esbuild
   }).then(result => {
     state.addFile(outfile, result)

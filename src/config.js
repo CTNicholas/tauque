@@ -33,29 +33,14 @@ function getConfig () {
 
 function clearDist () {
   try {
-
-  state.outputDirs.forEach(dir => {
-    fs.readdirSync(dir).forEach(file => {
-      fs.unlinkSync(path.join(dir, file))
+    state.outputDirs.forEach(dir => {
+      fs.readdirSync(dir).forEach(file => {
+        fs.unlinkSync(path.join(dir, file))
+      })
     })
-  })
   } catch (err) {
     message.error(err)
   }
-
-
-  /*
-  fs.readdirSync(directory).forEach((err, files) => {
-    if (err) throw err
-
-    for (const file of files) {
-      fs.unlink(path.join(directory, file), err => {
-        if (err) throw err
-      })
-    }
-  })
-
-   */
 }
 
 /*
