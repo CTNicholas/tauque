@@ -46,25 +46,3 @@ function clearDist () {
     message.error(err)
   }
 }
-
-/*
-function importConfig () {
-  let customConfig = []
-  const customConfigPath = './tauque.config.js'
-  try {
-    if (fs.existsSync(customConfigPath)) {
-      const importedConfig = import(customConfigPath)
-      if (Array.isArray(importedConfig)) {
-        customConfig = [...customConfig]
-      } else {
-        customConfig.push(importedConfig)
-      }
-    } else {
-      message.noConfig()
-    }
-  } catch (err) {
-    message.configError(err)
-  }
-  return customConfig
-}
-*/

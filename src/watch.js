@@ -12,12 +12,7 @@ export default async function (restart) {
 /**
  * Watches all watchDirs defined in config. Calls build when file changed detected,
  * and returns Array of build results, wrapped in a promise.
- * // Watcher filters for:
- * - node_modules
- * - .git
- * - anything beginning with .
- * - dist
- * - Any outputDirs
+ * Non-recursive watch when in cwd
  * @returns {Promise<{}[]>} - Promise-wrapped array of final builds
  */
 async function watchDirectories () {

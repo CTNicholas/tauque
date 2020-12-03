@@ -41,7 +41,7 @@ export default {
         this.outputDirs.push(conf.outputDir)
       }
       if (!this.watchDirs.includes(conf.watchDir)) {
-        this.watchDirs.push(conf.watchDir)
+        this.watchDirs.push(conf.watchDir || path.parse(conf.source).dir)
       }
     })
 

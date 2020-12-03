@@ -98,7 +98,7 @@ function createConfig (packageJson) {
   config.name = packageJson.name || 'package'
   config.source = getConfigSource(packageJson)
   config.watchDir = path.parse(config.source).dir
-  config.platform = 'all'
+  config.type = 'all'
   config.minify = true
   config.sourcemap = true
   config.target = ['es6']

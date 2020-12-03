@@ -5,9 +5,10 @@ import build from './build.js'
 import watch from './watch.js'
 import message from './message.js'
 
+message.opening()
+
 export default async function start (mode = undefined) {
   state.mode = mode || getMode()
-  message.opening()
   message.gettingConfig()
   await setConfig()
   const res = await build()

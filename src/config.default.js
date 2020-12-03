@@ -30,7 +30,7 @@ export default {
   target: ['es6'],
 
   // Directory to watch for changes while running dev mode
-  watchDir: 'src',
+  //watchDir: 'src',
 
   // Settings to apply to esbuild
   esbuild: {}
