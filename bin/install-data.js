@@ -82,7 +82,7 @@ export const tauqueReadme = `
   ### Single package config 
   {
     "name": "my-package",
-    "source": "src/index.js",
+    "source": "src/index.js"
   }
   
   

@@ -73,6 +73,19 @@ function runInstall () {
   console.log(c.bold('  Dev command: ' + c.yellowBright(devCmd)))
   console.log(c.gray('__________________________________________'))
   console.log()
+
+  runBuild()
+}
+
+function runBuild () {
+  const dir = 'dist'
+  if (fs.existsSync(dir)) {
+    if (fs.readdirSync(dir).length === 0) {
+      import '../src/index.js'
+    }
+  } else {
+    import '../src/index.js'
+  }
 }
 
 /**
