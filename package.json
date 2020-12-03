@@ -1,6 +1,6 @@
 {
   "name": "tauque",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Tauque is a zero-configuration JS/TS bundler with serious pulling power. It's up to 100x quicker than Rollup/Webpack with Babel.",
   "homepage": "https://github.com/CTNicholas/tauque#readme",
   "repository": "github:CTNicholas/tauque",

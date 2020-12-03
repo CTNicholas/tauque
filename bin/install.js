@@ -98,6 +98,7 @@ function createConfig (packageJson) {
   const config = {}
   config.name = packageJson.name || 'package'
   config.source = getConfigSource(packageJson)
+  config.watchDir = path.parse(config.source).dir
   config.platform = 'all'
   config.minify = true
   config.sourcemap = true
