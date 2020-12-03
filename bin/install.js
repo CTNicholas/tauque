@@ -8,7 +8,7 @@ import {
   commonEntryPoints,
   tauqueReadme
 } from './install-data.js'
-import startTauque from '../src/start'
+import startTauque from '../src/start.js'
 
 runInstall()
 
