@@ -1,3 +1,5 @@
+import path from 'path'
+
 export const tauqueScripts = {
   build: 'tauque',
   dev: 'tauque --dev'
@@ -12,17 +14,13 @@ export const tauqueDefaultPackage = {
   scripts: tauqueScripts
 }
 
-export const commonEntryPoints = [
-  'src/index.js',
-  'src/entry.js',
-  'src/main.js',
-  'lib/index.js',
-  'lib/entry.js',
-  'lib/main.js',
-  'index.js',
-  'entry.js',
-  'main.js'
-]
+const dirs = ['src', 'lib', '']
+const files = ['index.js', 'entry.js', 'main.js']
+const makeEntries =[]
+dirs.forEach(d => {
+  files.forEach(f => makeEntries.push(path.join(d, f)))
+})
+export const commonEntryPoints = makeEntries
 
 export const tauqueReadme = `
  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                                                

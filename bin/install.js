@@ -111,7 +111,7 @@ function getConfigSource (packageJson) {
   if (!fs.existsSync(getPath('src'))) {
     fs.mkdirSync(getPath('src'))
   }
-  fs.writeFileSync(getPath('src/index.js'), "console.log('Edit tauque.json to change index file')")
+  fs.writeFileSync(getPath(path.join('src', 'index.js')), "console.log('Edit tauque.json to change index file')")
   return 'src/index.js'
 }
 
