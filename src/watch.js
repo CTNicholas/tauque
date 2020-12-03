@@ -25,7 +25,8 @@ async function watchDirectories () {
     const finalDir = path.resolve(process.cwd(), watchDir)
     let buildResult = {}
     const dirWatcher = watch(finalDir, {
-      recursive: true,
+      recursive: watchDir !== ''
+      /*
       filter (f, skip) {
         if (/\/node_modules/.test(f)) return skip
         if (/\/.git/.test(f)) return skip
@@ -34,6 +35,7 @@ async function watchDirectories () {
         if (state.outputDirs.includes(f)) return skip
         return true
       }
+      */
     }, async (evt, name) => {
       if (state.closing) {
         return null

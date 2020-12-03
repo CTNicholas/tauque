@@ -72,7 +72,6 @@ function runInstall () {
   console.log()
   console.log(c.bold('Build command: ' + c.yellowBright(buildCmd)))
   console.log(c.bold('  Dev command: ' + c.yellowBright(devCmd)))
-  console.log(c.gray('__________________________________________'))
   console.log()
 
   runBuild()
