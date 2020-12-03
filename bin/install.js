@@ -82,10 +82,10 @@ function runBuild () {
   const dir = 'dist'
   if (fs.existsSync(dir)) {
     if (fs.readdirSync(dir).length === 0) {
-      startTauque()
+      startTauque('build').then(() => process.exit(0))
     }
   } else {
-    startTauque()
+    startTauque('build').then(() => process.exit(0))
   }
 }
 
