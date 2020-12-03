@@ -1,5 +1,7 @@
 import fs from 'fs'
 import path from 'path'
+import message from './message.js'
+import defaultConfig from './config.default.js'
 
 /**
  * Default runtime state
@@ -7,6 +9,7 @@ import path from 'path'
  */
 const defaultState = () => ({
   config: [],
+  outputDirs: [],
   watchDirs: [],
   watchers: [],
   closing: false,
@@ -20,6 +23,29 @@ const defaultState = () => ({
 export default {
   ...defaultState(),
 
+  // Called after config change
+  configChange () {
+    message.configChange()
+    this.closing = true
+    this.watchers.forEach(watcher => watcher.close())
+    this.reset()
+    message.restarting()
+  },
+
+  // Sets up state after config set
+  setupConfig (customConfig) {
+    customConfig.forEach(conf => this.config.push({ ...defaultConfig, ...conf }))
+    this.config.forEach(conf => {
+      if (!this.outputDirs.includes(conf.outputDir)) {
+        this.outputDirs.push(conf.outputDir)
+      }
+      if (!this.watchDirs.includes(conf.watchDir)) {
+        this.watchDirs.push(conf.watchDir)
+      }
+    })
+  },
+
+  // Returns esbuild from cache if exists, otherwise null
   getCache (filePath) {
     if (Object.keys(this.buildCache).includes(filePath)) {
       return this.buildCache[filePath]

@@ -32,11 +32,7 @@ function watchConfigFile (restart) {
       return null
     }
 
-    message.configChange()
-    state.closing = true
-    state.watchers.forEach(watcher => watcher.close())
-    state.reset()
-    message.restarting()
+    state.configChange()
     restart()
   })
   state.watchers.push(configWatcher)

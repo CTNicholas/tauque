@@ -7,12 +7,8 @@ import message from './message.js'
 export default async function () {
   state.reset()
   const customConfig = getConfig()
-  customConfig.forEach(conf => state.config.push({...defaultConfig, ...conf}))
-  state.config.forEach(conf => {
-    if (!state.watchDirs.includes(conf.watchDir)) {
-      state.watchDirs.push(conf.watchDir)
-    }
-  })
+  state.setupConfig(customConfig)
+  clearDist()
 }
 
 function getConfig () {
@@ -35,6 +31,34 @@ function getConfig () {
   return customConfig
 }
 
+function clearDist () {
+  try {
+
+  state.outputDirs.forEach(dir => {
+    fs.readdirSync(dir).forEach(file => {
+      fs.unlinkSync(path.join(dir, file))
+    })
+  })
+  } catch (err) {
+    message.error(err)
+  }
+
+
+  /*
+  fs.readdirSync(directory).forEach((err, files) => {
+    if (err) throw err
+
+    for (const file of files) {
+      fs.unlink(path.join(directory, file), err => {
+        if (err) throw err
+      })
+    }
+  })
+
+   */
+}
+
+/*
 function importConfig () {
   let customConfig = []
   const customConfigPath = './tauque.config.js'
@@ -54,3 +78,4 @@ function importConfig () {
   }
   return customConfig
 }
+*/
