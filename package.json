@@ -1,19 +1,19 @@
 {
   "name": "tauque",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Tauque is a zero-configuration JS/TS bundler with serious pulling power. It's up to 100x quicker than Rollup/Webpack with Babel.",
   "homepage": "https://github.com/CTNicholas/tauque#readme",
   "repository": "github:CTNicholas/tauque",
   "bugs": {
     "url": "https://github.com/CTNicholas/tauque/issues"
   },
-  "bin": "node ./bin/tauque.js",
+  "bin": "bin/tauque.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "esbuild src/index.js --bundle --minify --format=cjs --platform=node --target=node8 --outfile=dist/esbundle.js",
     "dev": "nodemon --watch src --exec \"npm run build\"",
-    "postinstall": "bin/install.js"
+    "postinstall": "node ./bin/install.js"
   },
   "author": "CTNicholas",
   "license": "MIT",
