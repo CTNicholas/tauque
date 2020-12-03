@@ -157,5 +157,5 @@ function editPackage (packagePath) {
 }
 
 function getPath (p) {
-  return path.resolve(process.cwd(), p)
+  return path.resolve(process.env.INIT_CWD || path.resolve('../../', __dirname), p)
 }
