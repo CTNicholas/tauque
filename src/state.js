@@ -83,7 +83,7 @@ export default {
   reset () {
     for (const [key, val] of Object.entries(defaultState())) {
       if (key === 'buildCount' && !isNaN(this.buildCount)) {
-        return null
+        continue
       }
       this[key] = val
     }

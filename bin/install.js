@@ -8,28 +8,13 @@ import {
   commonEntryPoints,
   tauqueReadme
 } from './install-data.js'
-/*
-Need to get name and main file from package.json
-global name can be same as package name?
-
-main in package.json
-src/index.js
-index.js
-src/main.js
-main.js
-
-CREATE src/index.js
-
-*/
-
-
 
 runInstall()
 
 function runInstall () {
   console.log(c.gray('__________________________________________'))
   console.log()
-  console.log(c.bold.cyanBright('Installing Tauque bundler'))
+  console.log('Installing Tauque bundler...')
   console.log()
 
   // Skip config install if tauque.json found
@@ -79,8 +64,10 @@ function runInstall () {
   console.log(c.bold.greenBright('Tauque installed!'))
   console.log(c.gray('__________________________________________'))
   console.log()
-  console.log(c.bold('  Config file: ' + c.green('tauque.json')))
-  console.log(c.bold('  Config info: ' + c.green('tauque.readme.md')))
+  console.log(c.bold('  Config file: ' + c.cyanBright('tauque.json')))
+  console.log(c.bold('  Config info: ' + c.cyanBright('tauque.readme.md')))
+  console.log()
+  console.log(c.bold('  Entry point: ' + c.greenBright(tauqueJson[0].source)))
   console.log()
   console.log(c.bold('Build command: ' + c.yellowBright(buildCmd)))
   console.log(c.bold('  Dev command: ' + c.yellowBright(devCmd)))

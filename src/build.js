@@ -65,7 +65,6 @@ function buildSingle (conf, pkgType = '', formatType = '') {
   const fileExt = conf.source && conf.source.endsWith('.css') ? 'css' : 'js'
   const outfile = path.join(conf.outputDir, `${conf.name}${pkgType ? '.' + pkgType : ''}.${fileExt}`)
 
-  /*
   const cachedFile = state.getCache(outfile)
 
   if (cachedFile !== null) {
@@ -74,8 +73,6 @@ function buildSingle (conf, pkgType = '', formatType = '') {
       return result
     })
   }
-
-   */
 
   let platform = pkgType || conf.platform
   let format = formatType || undefined
@@ -96,7 +93,7 @@ function buildSingle (conf, pkgType = '', formatType = '') {
     sourcemap: conf.sourcemap,
     target: conf.target.length ? conf.target : undefined,
     logLevel: 'error',
-    //incremental: true,
+    incremental: true,
     ...conf.esbuild
   }).then(result => {
     state.addFile(outfile, result)
