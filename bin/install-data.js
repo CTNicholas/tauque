@@ -36,7 +36,7 @@ export const tauqueReadme = `
                                                    ▀▀▀▀
   
   Tauque allows for a single configuration object within tauque.json, or multiple
-  within an array.
+  within an array. Major thanks to evanw for creating esbuild.
   
   ## Config options
   With default settings inserted:  
@@ -47,8 +47,8 @@ export const tauqueReadme = `
     // Location of the entry point (required)
     "source": "src/index.js",
     
-    // Platform choice: "node" (cjs), "browser" (iife), "module" (esm), or "all"
-    "platform": "all",
+    // Package type: "node" (cjs), "browser" (iife), "module" (esm), or "all"
+    "type": "all",
     
     // Global variable name of export in iife packages
     "global": "packageName",
@@ -94,13 +94,13 @@ export const tauqueReadme = `
     {
       "name": "mj-project",
       "source": "src/project.js",
-      "platform": "node",
+      "type": "node",
       "minify": false
     },
     {
       "name": "body",
       "source": "src/client/body.js",
-      "platform": "browser",
+      "type": "browser",
       "esbuild": {
         "banner": "/* Package made by CTNicholas */",
         "define": { "mode": "debug" }
@@ -110,5 +110,6 @@ export const tauqueReadme = `
   
   GitHub: https://github.com/CTNicholas/tauque
      NPM: https://www.npmjs.com/package/tauque
-
+ esbuild: https://esbuild.github.io/api
+   
 `

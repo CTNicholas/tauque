@@ -40,13 +40,13 @@ function buildBundles () {
       browser: 'iife',
       module: 'esm'
     }
-    if (conf.platform === 'all') {
+
+    if (conf.type === 'all') {
       const bundles = Object.entries(formats).map(([key, val]) => {
         return buildSingle(conf, key, val)
       })
       return [...res, ...bundles]
     }
-
 
     return [...res, buildSingle(conf)]
   }, [])
@@ -66,7 +66,6 @@ function buildSingle (conf, pkgType = '', formatType = '') {
   const outfile = path.join(conf.outputDir, `${conf.name}${pkgType ? '.' + pkgType : ''}.${fileExt}`)
 
   const cachedFile = state.getCache(outfile)
-
   if (cachedFile !== null) {
     return cachedFile.rebuild().then(result => {
       state.addFile(outfile, result)
@@ -74,10 +73,10 @@ function buildSingle (conf, pkgType = '', formatType = '') {
     })
   }
 
-  let platform = pkgType || conf.platform
+  let platform = pkgType || conf.type
   let format = formatType || undefined
 
-  if (pkgType === 'module' || conf.platform === 'module') {
+  if (pkgType === 'module' || conf.type === 'module') {
     platform = 'browser'
     format = 'esm'
   }
