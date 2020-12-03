@@ -8,7 +8,7 @@ import message from './message.js'
 state.mode = getMode()
 message.opening()
 
-async function start () {
+export default async function start () {
   message.gettingConfig()
   await setConfig()
   const res = await build()
@@ -17,8 +17,6 @@ async function start () {
   }
 }
 
-start()
-
 /**
  * Return 'dev' if --dev flag passed to console, otherwise returns 'build'
  * @returns {string} - The mode
@@ -26,3 +24,5 @@ start()
 function getMode () {
   return process.argv.includes('--dev') ? 'dev' : 'build'
 }
+
+process.on('SIGINT', () => process.exit())

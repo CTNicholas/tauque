@@ -1,3 +1,3 @@
-import './start.js'
+import start from './start.js'
 
-process.on('SIGINT', () => process.exit())
+start()

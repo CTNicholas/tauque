@@ -8,6 +8,7 @@ import {
   commonEntryPoints,
   tauqueReadme
 } from './install-data.js'
+import startTauque from '../src/start'
 
 runInstall()
 
@@ -81,10 +82,10 @@ function runBuild () {
   const dir = 'dist'
   if (fs.existsSync(dir)) {
     if (fs.readdirSync(dir).length === 0) {
-      import '../src/index.js'
+      startTauque()
     }
   } else {
-    import '../src/index.js'
+    startTauque()
   }
 }
 
