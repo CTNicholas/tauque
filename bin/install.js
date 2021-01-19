@@ -68,7 +68,7 @@ function runInstall () {
     let devCmd = packageJson.scripts.tauque ? 'npm run tauquedev' : 'npm run dev'
     console.log(c.gray('__________________________________________'))
     console.log()
-    console.log(c.bold.bgBlueBright(' ' + 'τauque bundler installed' + ' '))
+    console.log(' ' + c.bold.bgBlueBright(' ' + 'τauque bundler installed' + ' '))
     console.log(c.gray('__________________________________________'))
     console.log()
     console.log(c.bold('  Config file: ' + c.cyanBright('tauque.json')))

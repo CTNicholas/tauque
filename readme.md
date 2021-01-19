@@ -2,6 +2,11 @@
 
 Tauque (pronounced /tɔːk/, like torque) is a zero-configuration JS/TS bundler with serious pulling power.
 It uses esbuild under the cover, meaning it compiles up to **100x quicker** than Rollup/Webpack with Babel.
+
+Bundling a 10kb file in <40ms:
+
+![Tauque bundling example](https://raw.githubusercontent.com/CTNicholas/tauque/main/tauque-example.gif)
+
 ### Features
 - JavaScript (with optional transpilation)
 - TypeScript

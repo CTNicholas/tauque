@@ -4,6 +4,8 @@ import state from './state.js'
 import build from './build.js'
 import message from './message.js'
 
+const WATCH_DEBOUNCE_TIME = 50
+
 /**
  * Watch config file and directories
  * @param {Function} restart - Callback for watchConfigFile
@@ -26,13 +28,13 @@ async function watchDirectories () {
     let buildResult = {}
     const dirWatcher = watch(finalDir, {
       recursive: watchDir !== ''
-    }, async (evt, name) => {
+    }, debounce(async (evt, name) => {
       if (state.closing) {
         return null
       }
       message.change(name, evt)
       buildResult = await build()
-    })
+    }), WATCH_DEBOUNCE_TIME, true)
     state.watchers.push(dirWatcher)
     return buildResult
   })
@@ -52,4 +54,20 @@ function watchConfigFile (restart) {
     restart()
   })
   state.watchers.push(configWatcher)
+}
+
+
+function debounce(func, wait, immediate) {
+  var timeout
+  return function () {
+    var context = this, args = arguments
+    var later = function () {
+      timeout = null
+      if (!immediate) func.apply(context, args)
+    }
+    var callNow = immediate && !timeout
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+    if (callNow) func.apply(context, args)
+  }
 }

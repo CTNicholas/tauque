@@ -68,6 +68,7 @@ export default {
       })
       this.watchDirs = excludeWatchDirs ? this.watchDirs.filter(dir => !excludeWatchDirs.includes(dir)) : this.watchDirs
     }
+    this.watchDirs = [...new Set(this.watchDirs)]
 
     // Prevent name duplicates
     const names = this.config.map(conf => conf.name)
