@@ -1,30 +1,34 @@
 ![Tauque logo](https://raw.githubusercontent.com/CTNicholas/tauque/main/tauque.png)
 
 Tauque (pronounced /tɔːk/, like torque) is a zero-configuration JS/TS bundler with serious pulling power.
-It uses esbuild under the cover, meaning it compiles up to 100x quicker than Rollup/Webpack with Babel.
-## Features
+It uses esbuild under the cover, meaning it compiles up to **100x quicker** than Rollup/Webpack with Babel.
+### Features
 - JavaScript (with optional transpilation)
 - TypeScript
 - CSS (files and js imports)
 - JSON
 - JSX
 
-## Install
+### Install
 Install Tauque on a project that's already set up, and it'll take your entry point from `package.json`
 and automatically create a config file that's ready to run.
 ```shell
 npm install tauque
 ```
 
-## Run
-Bundles will be written to the `dist` folder by default. Run tauque with:
+### Ready to go!
+Tauque is now ready to run. Bundles will be written to the `dist` folder by default.
+Run tauque dev mode with:
 ```shell
 npm run dev
 ```
-Done
+A single time build can also be run with:
+```shell
+npm run build
+```
 
 
-## Config options
+### Config options
 A config file will automatically be generated when you first install Tauque.
 The default file is tauque.json, which should be found alongside `package.json` in your
 project root.
@@ -68,9 +72,9 @@ Note that comments are not allowed in JSON files.
   _______________________________________________________________________________
 
 
-## Config examples
+### Config examples
 
-### Single package config
+#### Single package config
 ```json
 {
     "name": "my-package",
@@ -83,7 +87,7 @@ Note that comments are not allowed in JSON files.
   ¬ my-package.js.map
 ```
 
-### Multiple package config
+#### Multiple package config
 ```json
 [
   {
@@ -107,7 +111,7 @@ Note that comments are not allowed in JSON files.
 ```
 
 
-### Complex package config
+#### Complex package config
 ```json
 [
   {

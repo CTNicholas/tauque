@@ -62,23 +62,27 @@ function runInstall () {
     console.log('Readme file written (tauque.readme.md)')
   }
 
-  // Final message
-  let buildCmd = packageJson.scripts.tauque ? 'npm run tauque' : 'npm run build'
-  let devCmd = packageJson.scripts.tauque ? 'npm run tauquedev' : 'npm run dev'
-  console.log()
-  console.log(c.bold.greenBright('Tauque installed!'))
-  console.log(c.gray('__________________________________________'))
-  console.log()
-  console.log(c.bold('  Config file: ' + c.cyanBright('tauque.json')))
-  console.log(c.bold('  Config info: ' + c.cyanBright('tauque.readme.md')))
-  console.log()
-  console.log(c.bold('  Entry point: ' + c.greenBright(tauqueJson[0].source)))
-  console.log()
-  console.log(c.bold('Build command: ' + c.yellowBright(buildCmd)))
-  console.log(c.bold('  Dev command: ' + c.yellowBright(devCmd)))
-  console.log()
+  // Final message, after a 1 second delay
+  setTimeout(() => {
+    let buildCmd = packageJson.scripts.tauque ? 'npm run tauque' : 'npm run build'
+    let devCmd = packageJson.scripts.tauque ? 'npm run tauquedev' : 'npm run dev'
+    console.log(c.gray('__________________________________________'))
+    console.log()
+    console.log(c.bold.bgBlueBright(' ' + 'τauque bundler installed' + ' '))
+    console.log(c.gray('__________________________________________'))
+    console.log()
+    console.log(c.bold('  Config file: ' + c.cyanBright('tauque.json')))
+    console.log(c.bold('  Config info: ' + c.cyanBright('tauque.readme.md')))
+    console.log()
+    console.log(c.bold('  Entry point: ' + c.greenBright(tauqueJson[0].source)))
+    console.log()
+    console.log(c.bold('Build command: ' + c.yellowBright(buildCmd)))
+    console.log(c.bold('  Dev command: ' + c.yellowBright(devCmd)))
+    console.log(c.gray('__________________________________________'))
+    console.log()
+  }, 1000)
 
-  runBuild()
+  // runBuild()
 }
 
 /**

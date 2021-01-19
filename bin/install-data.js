@@ -23,6 +23,7 @@ dirs.forEach(d => {
 export const commonEntryPoints = makeEntries
 
 export const tauqueReadme = `
+ \`\`\`
  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                                                
  ███████████████  ▄██████▄   ████    ████   ▄████▄ ████ ████    ████   ▄███████▄ 
       █████      ▀▀▀   ▀███  ████    ████  ████▀▀▀█████ ████    ████  ███▀   ▀███
@@ -32,6 +33,7 @@ export const tauqueReadme = `
       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ████  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
       B      U      N      D      L      E      R  ████  @ github.com/CTNicholas/
                                                    ▀▀▀▀
+ \`\`\`  
   
   Tauque allows for a single configuration object within tauque.json, or multiple
   within an array. Major thanks to evanw for creating esbuild.
