@@ -85,19 +85,46 @@ export const tauqueReadme = `
     "source": "src/index.js"
   }
   
+  - dist/
+    ¬ my-package.js
+    ¬ my-package.js.map
   
   
   ### Multiple package config
   [
     {
-      "name": "mj-project",
-      "source": "src/project.js",
+      "name": "my-package.browser",
+      "source": "src/index.js",
+      "type": "browser"
+    },
+    {
+      "name": "my-package.node",
+      "source": "src/index.js",
+      "type": "node"
+    }
+  ]
+  
+  - dist/
+    ¬ my-package.browser.js
+    ¬ my-package.browser.js.map
+    ¬ my-package.node.js
+    ¬ my-package.node.js.map
+  
+  
+  ### Complex package config
+  [
+    {
+      "name": "server",
+      "source": "src/server.js",
+      "outputDir": "build-server",
       "type": "node",
+      "sourcemap": false,
       "minify": false
     },
     {
-      "name": "body",
-      "source": "src/client/body.js",
+      "name": "client",
+      "source": "src/client/index.js",
+      "outputDir": "build-client",
       "type": "browser",
       "esbuild": {
         "banner": "/* Package made by CTNicholas */",
@@ -105,6 +132,13 @@ export const tauqueReadme = `
       }
     }
   ]
+  
+  - build-server/
+    ¬ server.js
+   
+  - build-client/
+    ¬ client.js
+    ¬ client.js.map
   
   GitHub: https://github.com/CTNicholas/tauque
      NPM: https://www.npmjs.com/package/tauque

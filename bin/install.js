@@ -12,6 +12,10 @@ import startTauque from '../src/start.js'
 
 runInstall()
 
+/**
+ * Install Tauque, create config (if needed), create readme, output info
+ * @returns {null}
+ */
 function runInstall () {
   console.log(c.gray('__________________________________________'))
   console.log()
@@ -77,6 +81,9 @@ function runInstall () {
   runBuild()
 }
 
+/**
+ * Runs initial build
+ */
 function runBuild () {
   const dir = 'dist'
   if (fs.existsSync(dir)) {

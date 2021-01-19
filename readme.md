@@ -3,19 +3,33 @@
 Tauque (pronounced /tɔːk/, like torque) is a zero-configuration JS/TS bundler with serious pulling power.
 It uses esbuild under the cover, meaning it compiles up to 100x quicker than Rollup/Webpack with Babel.
 ## Features
-- JavaScript
+- JavaScript (with optional transpilation)
 - TypeScript
 - CSS (files and js imports)
 - JSON
 - JSX
 
 ## Install
+Install Tauque on a project that's already set up, and it'll take your entry point from `package.json`
+and automatically create a config file that's ready to run.
 ```shell
 npm install tauque
 ```
 
+## Run
+Bundles will be written to the `dist` folder by default. Run tauque with:
+```shell
+npm run dev
+```
+Done
+
+
 ## Config options
-With default settings inserted:  
+A config file will automatically be generated when you first install Tauque.
+The default file is tauque.json, which should be found alongside `package.json` in your
+project root.
+
+All config options, with default settings:  
 ```js
 // Name of the final file (required)
 "name": "packageName",
@@ -49,7 +63,6 @@ With default settings inserted:
 
 // Native esbuild settings to pass on (overrides Tauque)
 "esbuild": {}   
-
 ```
 Note that comments are not allowed in JSON files.
   _______________________________________________________________________________
@@ -64,27 +77,64 @@ Note that comments are not allowed in JSON files.
     "source": "src/index.js"
 }
 ```
-
-
+```
+- dist/
+  ¬ my-package.js
+  ¬ my-package.js.map
+```
 
 ### Multiple package config
 ```json
 [
-    {
-        "name": "mj-project",
-        "source": "src/project.js",
-        "type": "node",
-        "minify": false
-    },
-    {
-        "name": "body",
-        "source": "src/client/body.js",
-        "type": "browser",
-        "esbuild": {
-            "banner": "/* Package made by CTNicholas */",
-            "define": { "mode": "debug" }
-        }
-    }
+  {
+    "name": "my-package.browser",
+    "source": "src/index.js",
+    "type": "browser"
+  },
+  {
+    "name": "my-package.node",
+    "source": "src/index.js",
+    "type": "node"
+  }
 ]
 ```
-  
+```
+- dist/
+  ¬ my-package.browser.js
+  ¬ my-package.browser.js.map
+  ¬ my-package.node.js
+  ¬ my-package.node.js.map
+```
+
+
+### Complex package config
+```json
+[
+  {
+    "name": "server",
+    "source": "src/server.js",
+    "outputDir": "build-server",
+    "type": "node",
+    "sourcemap": false,
+    "minify": false
+  },
+  {
+    "name": "client",
+    "source": "src/client/index.js",
+    "outputDir": "build-client",
+    "type": "browser",
+    "esbuild": {
+      "banner": "/* Package made by CTNicholas */",
+      "define": { "mode": "debug" }
+    }
+  }
+]
+```
+```
+- build-server/
+   ¬ server.js
+   
+- build-client/
+  ¬ client.js
+  ¬ client.js.map
+```

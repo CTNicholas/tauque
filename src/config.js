@@ -4,6 +4,10 @@ import defaultConfig from './config.default.js'
 import state from './state.js'
 import message from './message.js'
 
+/**
+ * Resets state and sets up config
+ * @returns {Promise<void>}
+ */
 export default async function () {
   state.reset()
   const customConfig = getConfig()
@@ -11,6 +15,11 @@ export default async function () {
   clearDist()
 }
 
+/**
+ * Returns custom config array, taken from file if it exists, otherwise
+ * copied from defaults
+ * @returns {[]} - Array of configs
+ */
 function getConfig () {
   let customConfig = []
   const customConfigPath = path.resolve(process.cwd(), 'tauque.json')
@@ -31,6 +40,9 @@ function getConfig () {
   return customConfig
 }
 
+/**
+ * Checks that dist folder exists, and empties it
+ */
 function clearDist () {
   try {
     state.outputDirs.forEach(dir => {

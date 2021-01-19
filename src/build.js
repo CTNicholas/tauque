@@ -41,14 +41,18 @@ function buildBundles () {
       module: 'esm'
     }
 
-    if (conf.type === 'all') {
-      const bundles = Object.entries(formats).map(([key, val]) => {
-        return buildSingle(conf, key, val)
-      })
-      return [...res, ...bundles]
-    }
+    try {
+      if (conf.type === 'all') {
+        const bundles = Object.entries(formats).map(([key, val]) => {
+          return buildSingle(conf, key, val)
+        })
+        return [...res, ...bundles]
+      }
 
-    return [...res, buildSingle(conf)]
+      return [...res, buildSingle(conf)]
+    } catch (err) {
+      message.error(err)
+    }
   }, [])
 }
 

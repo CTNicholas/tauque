@@ -4,6 +4,11 @@ import state from './state.js'
 import build from './build.js'
 import message from './message.js'
 
+/**
+ * Watch config file and directories
+ * @param {Function} restart - Callback for watchConfigFile
+ * @returns {Promise<{}[]>}
+ */
 export default async function (restart) {
   watchConfigFile(restart)
   return watchDirectories()
@@ -21,16 +26,6 @@ async function watchDirectories () {
     let buildResult = {}
     const dirWatcher = watch(finalDir, {
       recursive: watchDir !== ''
-      /*
-      filter (f, skip) {
-        if (/\/node_modules/.test(f)) return skip
-        if (/\/.git/.test(f)) return skip
-        if (/\^[.]/.test(f)) return skip
-        if (/\/dist/.test(f)) return skip
-        if (state.outputDirs.includes(f)) return skip
-        return true
-      }
-      */
     }, async (evt, name) => {
       if (state.closing) {
         return null
@@ -43,6 +38,10 @@ async function watchDirectories () {
   })
 }
 
+/**
+ * Watch config file for changes, run restart callback on change
+ * @param {Function} restart - Callback to run
+ */
 function watchConfigFile (restart) {
   const configWatcher = watch(path.join(process.cwd(), 'tauque.json'), {}, () => {
     if (state.closing) {
