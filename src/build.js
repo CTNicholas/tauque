@@ -3,6 +3,7 @@ import { performance } from 'perf_hooks'
 import esbuild from 'esbuild'
 import state from './state.js'
 import message from './message.js'
+import watch from './watch.js'
 
 /**
  * Builds all bundles, and returns a promise that resolves after all
@@ -19,13 +20,17 @@ export default async function () {
   state.resetBuild()
   const buildStart = performance.now()
   const bundles = buildBundles()
-  return Promise.all(bundles).then(warnings => {
-    state.buildTime = performance.now() - buildStart
-    state.buildCount++
-    message.built()
-    message.warnings(warnings)
-    return warnings
-  })
+  try {
+    return Promise.all(bundles).then(warnings => {
+      state.buildTime = performance.now() - buildStart
+      state.buildCount++
+      message.built()
+      message.warnings(warnings)
+      return warnings
+    })
+  } catch (err) {
+    message.error(err)
+  }
 }
 
 /**
@@ -103,7 +108,11 @@ function buildSingle (conf, pkgType = '', formatType = '') {
     incremental: true,
     define: define,
     ...conf.esbuild
-  }).then(result => {
+  })
+    .catch(err => {
+      message.error(err)
+    })
+    .then(result => {
     state.addFile(outfile, result)
     return result
   })

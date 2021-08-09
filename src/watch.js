@@ -1,5 +1,5 @@
 import path from 'path'
-import watch from 'node-watch'
+import nodeWatch from 'node-watch'
 import state from './state.js'
 import build from './build.js'
 import message from './message.js'
@@ -12,7 +12,8 @@ const WATCH_DEBOUNCE_TIME = 50
  * @returns {Promise<{}[]>}
  */
 export default async function (restart) {
-  watchConfigFile(restart)
+  setRestart(restart)
+  watchConfigFile()
   return watchDirectories()
 }
 
@@ -26,14 +27,18 @@ async function watchDirectories () {
   return state.watchDirs.map(async (watchDir) => {
     const finalDir = path.resolve(process.cwd(), watchDir)
     let buildResult = {}
-    const dirWatcher = watch(finalDir, {
+    const dirWatcher = nodeWatch(finalDir, {
       recursive: watchDir !== ''
     }, debounce(async (evt, name) => {
       if (state.closing) {
         return null
       }
       message.change(name, evt)
-      buildResult = await build()
+      try {
+        buildResult = await build()
+      } catch (err) {
+        message.error(err)
+      }
     }), WATCH_DEBOUNCE_TIME, true)
     state.watchers.push(dirWatcher)
     return buildResult
@@ -42,20 +47,18 @@ async function watchDirectories () {
 
 /**
  * Watch config file for changes, run restart callback on change
- * @param {Function} restart - Callback to run
  */
-function watchConfigFile (restart) {
-  const configWatcher = watch(path.join(process.cwd(), 'tauque.json'), {}, () => {
+function watchConfigFile () {
+  const configWatcher = nodeWatch(path.join(process.cwd(), 'tauque.json'), {}, () => {
     if (state.closing) {
       return null
     }
 
     state.configChange()
-    restart()
+    state.restart()
   })
   state.watchers.push(configWatcher)
 }
-
 
 function debounce(func, wait, immediate) {
   var timeout
@@ -69,5 +72,13 @@ function debounce(func, wait, immediate) {
     clearTimeout(timeout)
     timeout = setTimeout(later, wait)
     if (callNow) func.apply(context, args)
+  }
+}
+
+function setRestart (restart) {
+  if (restart) {
+    state.restart = restart
+  } else if (state.restart) {
+    restart = state.restart
   }
 }
