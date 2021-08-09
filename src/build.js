@@ -3,7 +3,6 @@ import { performance } from 'perf_hooks'
 import esbuild from 'esbuild'
 import state from './state.js'
 import message from './message.js'
-import watch from './watch.js'
 
 /**
  * Builds all bundles, and returns a promise that resolves after all
@@ -82,12 +81,7 @@ function buildSingle (conf, pkgType = '', formatType = '') {
     })
   }
 
-  let platform = pkgType || conf.type
-  let format = formatType || undefined
-  if (pkgType === 'module' || conf.type === 'module') {
-    platform = 'browser'
-    format = 'esm'
-  }
+  const { platform, format } = getBundleFormat(conf, pkgType, formatType)
 
   let define = {}
   if (conf.useEnvVariables) {
@@ -104,7 +98,6 @@ function buildSingle (conf, pkgType = '', formatType = '') {
     minify: conf.minify,
     sourcemap: conf.sourceMap,
     target: conf.target.length ? conf.target : undefined,
-    //logLevel: 'error',
     logLevel: 'error',
     incremental: true,
     define: define,
@@ -114,9 +107,28 @@ function buildSingle (conf, pkgType = '', formatType = '') {
       message.error(err)
     })
     .then(result => {
-    state.addFile(outfile, result)
-    return result
-  })
+      state.addFile(outfile, result)
+      return result
+    })
+}
+
+function getBundleFormat (conf, pkgType, formatType) {
+  let platform = pkgType || conf.type
+  let format = formatType || undefined
+
+  let confValue = pkgType || conf.type
+  if (confValue === 'module') {
+    platform = 'browser'
+    format = 'esm'
+  } else if (confValue === 'browser') {
+    platform = 'browser'
+    format = 'iife'
+  } else if (confValue === 'node') {
+    platform = 'node'
+    format = 'cjs'
+  }
+
+  return { platform, format }
 }
 
 function getEnvVariables () {
