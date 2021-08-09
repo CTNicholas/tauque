@@ -10,5 +10,5 @@ export default function commonEntryPoints (name = '') {
       exts.forEach(e => makeEntries.push(path.join(d, f) + e))
     })
   })
-  export const commonEntryPoints = makeEntries
+  return makeEntries
 }
