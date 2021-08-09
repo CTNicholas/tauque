@@ -32,6 +32,9 @@ export default {
   // Directory to watch for changes while running dev mode
   //watchDir: 'src',
 
+  // Bundle environment variables
+  useEnv: true,
+
   // Settings to apply to esbuild
   esbuild: {}
 }

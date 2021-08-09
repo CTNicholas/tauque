@@ -16,7 +16,7 @@ export const tauqueDefaultPackage = {
 
 const dirs = ['src', 'lib', '']
 const files = ['index.js', 'entry.js', 'main.js']
-const makeEntries =[]
+const makeEntries = []
 dirs.forEach(d => {
   files.forEach(f => makeEntries.push(path.join(d, f)))
 })
@@ -47,7 +47,7 @@ export const tauqueReadme = `
     // Location of the entry point (required)
     "source": "src/index.js",
     
-    // Package type: "node" (cjs), "browser" (iife), "module" (esm), or "all"
+    // Package type: "module" (esm), "browser" (iife), "node" (cjs), or "all" (generate all)
     "type": "all",
     
     // Global variable name of export in iife packages
@@ -71,6 +71,9 @@ export const tauqueReadme = `
     // Directory to watch for changes
     "watchDir": "src",
     
+    // Automatically add environment variables
+    "useEnv": true,
+    
     // Native esbuild settings to pass on (overrides Tauque)
     "esbuild": {}   
   }
@@ -81,7 +84,7 @@ export const tauqueReadme = `
   
   ## Config examples
     
-  ### Single package config 
+  ### Single output config 
   {
     "name": "my-package",
     "source": "src/index.js"
@@ -92,7 +95,7 @@ export const tauqueReadme = `
     ¬ my-package.js.map
   
   
-  ### Multiple package config
+  ### Multiple output config
   [
     {
       "name": "my-package.browser",
@@ -111,36 +114,79 @@ export const tauqueReadme = `
     ¬ my-package.browser.js.map
     ¬ my-package.node.js
     ¬ my-package.node.js.map
+    
+    
+    ### Multiple input/output config
+    [
+      {
+        "name": "my-server",
+        "source": "src/server.js",
+        "outputDir": "dist/server",
+        "type": "module"
+      },
+      {
+        "name": "my-client",
+        "source": "src/client.js",
+        "outputDir": "dist/client",
+        "type": "browser"
+      }
+    ]
+    
+    - dist/
+      - client/
+        ¬ my-client.js
+        ¬ my-client.js.map
+      - server/
+        ¬ my-server.js
+        ¬ my-server.js.map
+
   
-  
-  ### Complex package config
+  ### Complex config
   [
+    {
+      "name": "client",
+      "source": "src/client/index.js",
+      "outputDir": "build-client",
+      "type": "browser",
+      "sourcemap": false,
+      "minify": false,
+      "esbuild": {
+        "banner": "/* Package made by CTNicholas */",
+        "define": {
+          "mode": "debug"
+        }
+      }
+    },
+    {
+      "name": "client.min",
+      "source": "src/client/index.js",
+      "outputDir": "build-client",
+      "type": "browser",
+      "esbuild": {
+        "banner": "/* Package made by CTNicholas */",
+        "define": {
+          "mode": "debug"
+        }
+      }
+    },
     {
       "name": "server",
       "source": "src/server.js",
       "outputDir": "build-server",
       "type": "node",
       "sourcemap": false,
-      "minify": false
-    },
-    {
-      "name": "client",
-      "source": "src/client/index.js",
-      "outputDir": "build-client",
-      "type": "browser",
-      "esbuild": {
-        "banner": "/* Package made by CTNicholas */",
-        "define": { "mode": "debug" }
-      }
+      "minify": false,
+      "bundle": false
     }
   ]
   
-  - build-server/
-    ¬ server.js
-   
   - build-client/
     ¬ client.js
-    ¬ client.js.map
+    ¬ client.min.js
+    ¬ client.min.js.map
+    
+  - build-server/
+     ¬ server.js
   
   GitHub: https://github.com/CTNicholas/tauque
      NPM: https://www.npmjs.com/package/tauque

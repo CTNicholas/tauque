@@ -79,16 +79,20 @@ function buildSingle (conf, pkgType = '', formatType = '') {
 
   let platform = pkgType || conf.type
   let format = formatType || undefined
-
   if (pkgType === 'module' || conf.type === 'module') {
     platform = 'browser'
     format = 'esm'
   }
 
+  let define = {}
+  if (conf.useEnv) {
+    define = getEnvVariables()
+  }
+
   return esbuild.build({
     entryPoints: [conf.source],
     outfile: outfile,
-    bundle: true,
+    bundle: conf.bundle,
     platform: platform,
     format: format,
     globalName: conf.global.length ? conf.global : undefined,
@@ -97,9 +101,21 @@ function buildSingle (conf, pkgType = '', formatType = '') {
     target: conf.target.length ? conf.target : undefined,
     logLevel: 'error',
     incremental: true,
+    define: define,
     ...conf.esbuild
   }).then(result => {
     state.addFile(outfile, result)
     return result
   })
+}
+
+function getEnvVariables () {
+  const define = {}
+  for (const envVar in process.env) {
+    if (envVar.includes('(') || envVar.includes(')')) {
+      continue
+    }
+    define[`process.env.${envVar}`] = JSON.stringify(process.env[envVar])
+  }
+  return define
 }
