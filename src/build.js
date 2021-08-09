@@ -90,7 +90,7 @@ function buildSingle (conf, pkgType = '', formatType = '') {
   }
 
   let define = {}
-  if (conf.useEnv) {
+  if (conf.useEnvVariables) {
     define = getEnvVariables()
   }
 
@@ -102,8 +102,9 @@ function buildSingle (conf, pkgType = '', formatType = '') {
     format: format,
     globalName: conf.global.length ? conf.global : undefined,
     minify: conf.minify,
-    sourcemap: conf.sourcemap,
+    sourcemap: conf.sourceMap,
     target: conf.target.length ? conf.target : undefined,
+    //logLevel: 'error',
     logLevel: 'error',
     incremental: true,
     define: define,

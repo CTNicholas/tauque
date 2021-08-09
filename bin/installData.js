@@ -14,14 +14,6 @@ export const tauqueDefaultPackage = {
   scripts: tauqueScripts
 }
 
-const dirs = ['src', 'lib', '']
-const files = ['index.js', 'entry.js', 'main.js']
-const makeEntries = []
-dirs.forEach(d => {
-  files.forEach(f => makeEntries.push(path.join(d, f)))
-})
-export const commonEntryPoints = makeEntries
-
 export const tauqueReadme = `
  \`\`\`
  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                                                
@@ -53,6 +45,15 @@ export const tauqueReadme = `
     // Global variable name of export in iife packages
     "global": "packageName",
     
+    // Directory to output package to
+    "outputDir": "dist", 
+    
+    // Directory to watch for changes
+    "watchDir": "src",
+    
+    // Target environment, eg: ["es2020", "chrome58", "firefox57", "node12.19.1"]
+    "target": ["es6"],
+    
     // Bundle imports: true, false
     "bundle": true,
     
@@ -60,19 +61,10 @@ export const tauqueReadme = `
     "minify": true,
     
     // Generate separate source map file
-    "sourcemap": true,
-    
-    // Target environment, eg: ["es2020", "chrome58", "firefox57", "node12.19.1"]
-    "target": ["es6"],
-    
-    // Directory to output package to
-    "outputDir": "dist", 
-    
-    // Directory to watch for changes
-    "watchDir": "src",
+    "sourceMap": true,
     
     // Automatically add environment variables
-    "useEnv": true,
+    "useEnvVariables": true,
     
     // Native esbuild settings to pass on (overrides Tauque)
     "esbuild": {}   

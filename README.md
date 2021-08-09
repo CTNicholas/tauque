@@ -55,6 +55,15 @@ All config options, with default settings:
 
 // Global variable name of export in iife packages
 "global": "packageName",
+  
+// Directory for output package
+"outputDir": "dist",
+
+// Directory to watch for changes
+"watchDir": "src",
+
+// Target environment, eg: ["es2020", "chrome58", "firefox57", "node12.19.1"]
+"target": ["es6"],
 
 // Bundle imports: true, false
 "bundle": true,
@@ -63,20 +72,11 @@ All config options, with default settings:
 "minify": true,
 
 // Generate separate source map file
-"sourcemap": true,
-
-// Target environment, eg: ["es2020", "chrome58", "firefox57", "node12.19.1"]
-"target": ["es6"],
-
-// Directory for output package
-"outputDir": "dist",
-
-// Directory to watch for changes
-"watchDir": "src",
+"sourceMap": true,
 
 // Automatically add environment variables
-"useEnv": true,
-
+"useEnvVariables": true,
+  
 // Native esbuild settings to pass on (overrides Tauque)
 "esbuild": {}   
 ```
