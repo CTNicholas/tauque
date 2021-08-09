@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { tauqueDefaultPackage } from './installData'
+import { tauqueDefaultPackage } from './installData.js'
 
 /**
  * Creates default package.json

@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { tauqueScripts } from './installData'
+import { tauqueScripts } from './installData.js'
 
 /**
  * Merges scripts with current package.json content and returns as object

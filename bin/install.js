@@ -2,10 +2,10 @@
 import fs from 'fs'
 import c from 'ansi-colors'
 import { tauqueReadme } from './installData.js'
-import createConfig from './createConfig'
-import getPath from './getPath'
-import createPackage from './createPackage'
-import editPackage from './editPackage'
+import createConfig from './createConfig.js'
+import getPath from './getPath.js'
+import createPackage from './createPackage.js'
+import editPackage from './editPackage.js'
 
 runInstall()
 
@@ -33,7 +33,6 @@ function runInstall () {
 
   // Get or create config package.json object
   let packageJson
-  let packageCreated = false
   const packagePath = getPath('package.json')
   if (fs.existsSync(packagePath)) {
     packageJson = editPackage(packagePath)
@@ -41,7 +40,6 @@ function runInstall () {
   } else {
     packageJson = createPackage(packagePath)
     console.log('Creating package.json')
-    packageCreated = true
   }
 
   // Create tauque.json config object

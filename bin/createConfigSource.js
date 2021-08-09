@@ -1,7 +1,7 @@
-import commonEntryPoints from './commonEntryPoints'
 import fs from 'fs'
 import path from 'path'
-import getPath from './getPath'
+import commonEntryPoints from './commonEntryPoints.js'
+import getPath from './getPath.js'
 
 /**
  * Looks for common entry points, and returns if one exists

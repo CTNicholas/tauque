@@ -1,5 +1,5 @@
 import fs from 'fs'
-import startTauque from '../src/start'
+import startTauque from '../src/start.js'
 
 /**
  * Runs initial build

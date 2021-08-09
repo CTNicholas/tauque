@@ -1,5 +1,5 @@
 import path from 'path'
-import getConfigSource from './createConfigSource'
+import getConfigSource from './createConfigSource.js'
 
 /**
  * Creates default tauque.json config object
