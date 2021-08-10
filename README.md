@@ -2,7 +2,19 @@
 
 Tauque (pronounced /tɔːk/, like torque) is a zero-configuration JS/TS bundler with serious pulling power. It uses esbuild under the cover, meaning it transpiles up to **100x quicker** than Rollup/Webpack with Babel.
 
-![Tauque bundling example](https://raw.githubusercontent.com/CTNicholas/tauque/main/tauque-example-2.gif)
+Install:
+
+```shell
+npm install tauque
+```
+
+Create a `dist` folder with bundles (no-config needed):
+
+```shell
+npm run dev
+```
+
+![Tauque bundling example](https://raw.githubusercontent.com/CTNicholas/tauque/main/tauque-example-3.gif)
 
 ### Tauque can bundle
 
@@ -12,9 +24,13 @@ Tauque (pronounced /tɔːk/, like torque) is a zero-configuration JS/TS bundler 
 - CSS (files and js imports)
 - JSON
 
+Dev mode watching for file changes and running cumulative builds, most taking around 10ms:
+
+![Tauque bundling example](https://raw.githubusercontent.com/CTNicholas/tauque/main/tauque-example-2.gif)
+
 ### Install
 
-Install Tauque on a project that's already set up, and it'll take your entry point from `package.json`
+Install Tauque on a project that's already set up, and it'll take your entry point from `package.json` (or try to find it elsewhere)
 and automatically create a config file that's ready to run.
 
 ```shell
@@ -23,7 +39,7 @@ npm install tauque
 
 ### Ready to go!
 
-Tauque is now ready to run. Bundles will be written to the `dist` folder by default. Note that the `dist` folder will be overwritten. Run tauque dev mode with:
+Tauque is now ready to run. Bundles will be written to the `dist` folder by default. Note that the `dist` folder will be overwritten on each build. Run tauque dev mode with:
 
 ```shell
 npm run dev
@@ -43,65 +59,40 @@ All config options, with default settings:
 
 ```js
 // Name of the final file (required)
-"name"
-:
-"packageName"
+"name": "packageName"
 
 // Location of the entry point (required)
-"source"
-:
-"src/index.js",
+"source": "src/index.js",
 
 // Package type: "module" (also "esm"); "browser" (also "iife"); "node" (also "cjs"); "all"
-  "type"
-:
-"all",
+"type": "all",
 
 // Global variable name of export in browser/iife packages
-  "global"
-:
-"packageName",
+"global": "packageName",
 
 // Directory for output package
-  "outputDir"
-:
-"dist",
+"outputDir": "dist",
 
 // Directory to watch for changes
-  "watchDir"
-:
-"src",
+"watchDir": "src",
 
 // Target environment, eg: ["es2020", "chrome58", "firefox57", "node12.19.1"]
-  "target"
-:
-["es6"],
+"target": ["es6"],
 
 // Bundle imports: true, false
-  "bundle"
-:
-true,
+"bundle": true,
 
 // Minify package: true, false
-  "minify"
-:
-true,
+"minify": true,
 
 // Generate separate source map file
-  "sourceMap"
-:
-true,
+"sourceMap": true,
 
 // Automatically add environment variables
-  "useEnvVariables"
-:
-true,
+"useEnvVariables": true,
 
 // Native esbuild settings to pass on (overrides Tauque)
-  "esbuild"
-:
-{
-}   
+"esbuild": {}   
 ```
 
 Note that comments are not allowed in JSON files.
