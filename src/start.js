@@ -1,8 +1,8 @@
-import setConfig from './config.js'
-import state from './state.js'
-import build from './build.js'
-import watch from './watch.js'
-import message from './message.js'
+import config from './config.js'
+import state from './state/index.js'
+import build from './build/index.js'
+import watch from './watch/index.js'
+import message from './message/index.js'
 
 // Log opening message only once
 message.opening()
@@ -16,10 +16,12 @@ message.opening()
  */
 export default async function start (mode = getMode()) {
   state.mode = mode
+
   message.gettingConfig()
-  await setConfig()
+  await config()
   message.configSet()
-  const res = await build()
+  await build()
+
   if (state.mode === 'dev') {
     watch(start)
   } else {

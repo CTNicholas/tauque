@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import message from './message.js'
-import defaultConfig from './config.default.js'
+import message from '../message/index.js'
+import defaultConfig from '../config.default.js'
 
 /**
  * Default runtime state
@@ -115,3 +115,48 @@ export default {
     }
   }
 }
+
+
+/*
+import configChange from '../message/configChange.js'
+import setupConfig from './setupConfig.js'
+import getCache from './getCache.js'
+import resetBuild from './resetBuild.js'
+import defaultState from './defaultState.js'
+import fs from 'fs'
+import path from 'path'
+
+// State of current runtime, initialised to defaultState
+const state = {
+  ...defaultState(),
+  configChange,
+  setupConfig,
+  getCache,
+
+  addFile (filePath, compileBuild) {
+    const stats = fs.statSync(filePath)
+    this.buildFiles.push({
+      ...path.parse(filePath),
+      path: filePath,
+      size: stats.size
+    })
+    if (this.getCache(filePath) === null) {
+      this.buildCache[filePath] = compileBuild
+    }
+  },
+
+  resetBuild,
+
+  reset () {
+    for (const [key, val] of Object.entries(defaultState())) {
+      if (key === 'buildCount' && !isNaN(this.buildCount)) {
+        continue
+      }
+      this[key] = val
+    }
+  }
+
+}
+
+export default state
+*/

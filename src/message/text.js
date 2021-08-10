@@ -39,4 +39,7 @@ function getSymbols () {
   }
 }
 
-export { getWords, getSymbols }
+const w = getWords()
+const s = getSymbols()
+
+export { w, s }

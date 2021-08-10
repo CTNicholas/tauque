@@ -1,8 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import defaultConfig from './config.default.js'
-import state from './state.js'
-import message from './message.js'
+import state from './state/index.js'
+import message from './message/index.js'
 
 /**
  * Resets state and sets up config
