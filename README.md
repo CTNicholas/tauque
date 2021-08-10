@@ -2,17 +2,15 @@
 
 Tauque (pronounced /tɔːk/, like torque) is a zero-configuration JS/TS bundler with serious pulling power. It uses esbuild under the cover, meaning it transpiles up to **100x quicker** than Rollup/Webpack with Babel.
 
-Bundling 20 files into a single 10Kb file in 31ms, then rebundling 6 times in <10ms:
+![Tauque bundling example](https://raw.githubusercontent.com/CTNicholas/tauque/main/tauque-example-2.gif)
 
-![Tauque bundling example](https://raw.githubusercontent.com/CTNicholas/tauque/main/tauque-example.gif)
-
-### Features
+### Tauque can bundle
 
 - JavaScript (with optional transpilation)
 - TypeScript
+- JSX
 - CSS (files and js imports)
 - JSON
-- JSX
 
 ### Install
 
@@ -25,7 +23,7 @@ npm install tauque
 
 ### Ready to go!
 
-Tauque is now ready to run. Bundles will be written to the `dist` folder by default. Run tauque dev mode with:
+Tauque is now ready to run. Bundles will be written to the `dist` folder by default. Note that the `dist` folder will be overwritten. Run tauque dev mode with:
 
 ```shell
 npm run dev
@@ -45,46 +43,73 @@ All config options, with default settings:
 
 ```js
 // Name of the final file (required)
-"name": "packageName"
+"name"
+:
+"packageName"
 
 // Location of the entry point (required)
-"source": "src/index.js",
+"source"
+:
+"src/index.js",
 
-// Package type: "module" (esm), "browser" (iife), "node" (cjs), or "all" (generate all)
-"type": "all",
+// Package type: "module" (also "esm"); "browser" (also "iife"); "node" (also "cjs"); "all"
+  "type"
+:
+"all",
 
-// Global variable name of export in iife packages
-"global": "packageName",
-  
+// Global variable name of export in browser/iife packages
+  "global"
+:
+"packageName",
+
 // Directory for output package
-"outputDir": "dist",
+  "outputDir"
+:
+"dist",
 
 // Directory to watch for changes
-"watchDir": "src",
+  "watchDir"
+:
+"src",
 
 // Target environment, eg: ["es2020", "chrome58", "firefox57", "node12.19.1"]
-"target": ["es6"],
+  "target"
+:
+["es6"],
 
 // Bundle imports: true, false
-"bundle": true,
+  "bundle"
+:
+true,
 
 // Minify package: true, false
-"minify": true,
+  "minify"
+:
+true,
 
 // Generate separate source map file
-"sourceMap": true,
+  "sourceMap"
+:
+true,
 
 // Automatically add environment variables
-"useEnvVariables": true,
-  
+  "useEnvVariables"
+:
+true,
+
 // Native esbuild settings to pass on (overrides Tauque)
-"esbuild": {}   
+  "esbuild"
+:
+{
+}   
 ```
 
 Note that comments are not allowed in JSON files.
-  _______________________________________________________________________________
+_______________________________________________________________________________
 
 ### Config examples
+
+All unset options inherit the default settings shown above.
 
 #### Single output config
 
@@ -97,8 +122,12 @@ Note that comments are not allowed in JSON files.
 
 ```
 - dist/
-  ¬ my-package.js
-  ¬ my-package.js.map
+  ¬ my-package.browser.js
+  ¬ my-package.browser.js.map
+  ¬ my-package.module.js
+  ¬ my-package.module.js.map
+  ¬ my-package.node.js
+  ¬ my-package.node.js.map
 ```
 
 #### Multiple output config
@@ -106,24 +135,24 @@ Note that comments are not allowed in JSON files.
 ```json
 [
   {
-    "name": "my-package.browser",
+    "name": "my-iife-package",
     "source": "src/index.js",
     "type": "browser"
   },
   {
-    "name": "my-package.node",
+    "name": "my-esm-package",
     "source": "src/index.js",
-    "type": "node"
+    "type": "module"
   }
 ]
 ```
 
 ```
 - dist/
-  ¬ my-package.browser.js
-  ¬ my-package.browser.js.map
-  ¬ my-package.node.js
-  ¬ my-package.node.js.map
+  ¬ my-iife-package.js
+  ¬ my-iife-package.js.map
+  ¬ my-esm-package.js
+  ¬ my-esm-package.js.map
 ```
 
 #### Multiple input/output config
@@ -131,16 +160,16 @@ Note that comments are not allowed in JSON files.
 ```json
 [
   {
-    "name": "my-server",
-    "source": "src/server.js",
-    "outputDir": "dist/server",
-    "type": "module"
-  },
-  {
     "name": "my-client",
     "source": "src/client.js",
     "outputDir": "dist/client",
     "type": "browser"
+  },
+  {
+    "name": "my-server",
+    "source": "src/server.js",
+    "outputDir": "dist/server",
+    "type": "node"
   }
 ]
 ```
@@ -177,13 +206,7 @@ Note that comments are not allowed in JSON files.
     "name": "client.min",
     "source": "src/client/index.js",
     "outputDir": "build-client",
-    "type": "browser",
-    "esbuild": {
-      "banner": "/* Package made by CTNicholas */",
-      "define": {
-        "mode": "debug"
-      }
-    }
+    "type": "browser"
   },
   {
     "name": "server",

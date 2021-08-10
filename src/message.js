@@ -1,5 +1,4 @@
 import path from 'path'
-import fs from 'fs'
 import c from 'ansi-colors'
 import cmd from 'ansi-escapes'
 import state from './state.js'
@@ -74,11 +73,11 @@ function built () {
 }
 
 // On files change, output change message, with current time
-function change (name, evt) {
+function change (name) {
   const currTime = new Date(Date.now()).toLocaleTimeString()
   const fileName = path.parse(name).base
   eraseAll()
-  opening()
+  // opening()
   writeLine(w.change, s.change)
   writeLine(`${fileName}` + ' ' + c.gray(currTime))
   writeLine()
@@ -87,7 +86,7 @@ function change (name, evt) {
 // On config change, write config change messages
 function configChange () {
   eraseAll()
-  opening()
+  // opening()
   writeLine(w.configChange, s.configChange)
   writeLine()
 }
@@ -154,7 +153,8 @@ export default {
 
 // Erase all Tauque messages
 function eraseAll () {
-  writeLine(cmd.eraseLines(lineCount + 3))
+  // writeLine(cmd.eraseLines(lineCount + 3))
+  writeLine(cmd.eraseLines(500))
   lineCount = 0
 }
 

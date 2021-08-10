@@ -9,7 +9,7 @@ export default {
   //types: ['iife', 'cjs', 'esm'],
 
   // 'node' / 'browser' / 'module' / 'all'
-  platform: 'all',
+  type: 'all',
 
   // Global name, only applies to iife
   global: '',
@@ -24,7 +24,7 @@ export default {
   minify: true,
 
   // Generate separate source map
-  sourcemap: true,
+  sourceMap: true,
 
   // Target environment, ie: ['es2020', 'chrome58', 'firefox57', 'node12.19.0']
   target: ['es6'],
@@ -33,7 +33,7 @@ export default {
   //watchDir: 'src',
 
   // Bundle environment variables
-  useEnv: true,
+  useEnvVariables: true,
 
   // Settings to apply to esbuild
   esbuild: {}

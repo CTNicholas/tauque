@@ -37,10 +37,10 @@ export const tauqueReadme = `
     // Location of the entry point (required)
     "source": "src/index.js",
     
-    // Package type: "module" (esm), "browser" (iife), "node" (cjs), or "all" (generate all)
+    // Package type: "module" (also "esm"); "browser" (also "iife"); "node" (also "cjs"); "all"
     "type": "all",
     
-    // Global variable name of export in iife packages
+    // Global variable name of export in browser/iife packages
     "global": "packageName",
     
     // Directory to output package to
@@ -73,6 +73,7 @@ export const tauqueReadme = `
   
   
   ## Config examples
+  All unset options inherit the default settings shown above.
     
   ### Single output config 
   {
@@ -81,8 +82,12 @@ export const tauqueReadme = `
   }
   
   - dist/
-    ¬ my-package.js
-    ¬ my-package.js.map
+    ¬ my-package.browser.js
+    ¬ my-package.browser.js.map
+    ¬ my-package.module.js
+    ¬ my-package.module.js.map
+    ¬ my-package.node.js
+    ¬ my-package.node.js.map
   
   
   ### Multiple output config
@@ -151,13 +156,7 @@ export const tauqueReadme = `
       "name": "client.min",
       "source": "src/client/index.js",
       "outputDir": "build-client",
-      "type": "browser",
-      "esbuild": {
-        "banner": "/* Package made by CTNicholas */",
-        "define": {
-          "mode": "debug"
-        }
-      }
+      "type": "browser"
     },
     {
       "name": "server",
