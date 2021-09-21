@@ -8,7 +8,7 @@ export default {
   // 'iife' / 'cjs' / 'esm'
   //types: ['iife', 'cjs', 'esm'],
 
-  // 'node' / 'browser' / 'module' / 'all'
+  // 'node' 'cjs' / 'browser' 'iife' / 'module' 'esm' / 'all'
   type: 'all',
 
   // Global name, only applies to iife
