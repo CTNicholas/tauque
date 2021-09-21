@@ -5,7 +5,7 @@ Tauque (pronounced /tɔːk/, like torque) is a zero-configuration JS/TS bundler 
 Install:
 
 ```shell
-npm install tauque
+npx install-tauque
 ```
 
 Create a `dist` folder with bundles (no-config needed):
@@ -14,7 +14,7 @@ Create a `dist` folder with bundles (no-config needed):
 npm run dev
 ```
 
-![Tauque bundling example](https://raw.githubusercontent.com/CTNicholas/tauque/main/tauque-example-3.gif)
+![Tauque bundling example](https://raw.githubusercontent.com/CTNicholas/tauque/main/tauque-example-1.gif)
 
 ### Tauque can bundle
 
@@ -34,7 +34,7 @@ Install Tauque on a project that's already set up, and it'll take your entry poi
 and automatically create a config file that's ready to run.
 
 ```shell
-npm install tauque
+npx install-tauque
 ```
 
 ### Ready to go!
@@ -49,6 +49,12 @@ A single time build can also be run with:
 
 ```shell
 npm run build
+```
+
+### Alternative install
+You can also Tauque without building config and readme files:
+```shell
+npm install tauque
 ```
 
 ### Config options
@@ -92,7 +98,7 @@ All config options, with default settings:
 "useEnvVariables": true,
 
 // Native esbuild settings to pass on (overrides Tauque)
-"esbuild": {}   
+"esbuild": {}  
 ```
 
 Note that comments are not allowed in JSON files.
