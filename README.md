@@ -39,7 +39,7 @@ npx install-tauque
 
 ### Ready to go!
 
-Tauque is now ready to run. Bundles will be written to the `dist` folder by default. Note that the `dist` folder will be overwritten on each build. Run tauque dev mode with:
+Tauque is now ready to run. Bundles will be written to the `dist` folder by default. Run tauque dev mode with:
 
 ```shell
 npm run dev
@@ -59,7 +59,8 @@ npm install tauque
 
 ### Config options
 
-A config file will automatically be generated when you first install Tauque. The default file is tauque.json, which should be found alongside `package.json` in your project root.
+A `tauque.json` config file will automatically be generated when you first install Tauque. 
+This should be placed alongside `package.json` in your project root.
 
 All config options, with default settings:
 
@@ -106,6 +107,7 @@ _______________________________________________________________________________
 
 ### Config examples
 
+A list of `tauque.json` config examples with the `dist` folders they create.
 All unset options inherit the default settings shown above.
 
 #### Single output config
