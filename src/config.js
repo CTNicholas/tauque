@@ -11,7 +11,7 @@ export default async function () {
   state.reset()
   const customConfig = getConfig()
   state.setupConfig(customConfig)
-  clearDist()
+  createDist()
 }
 
 /**
@@ -40,16 +40,12 @@ function getConfig () {
 }
 
 /**
- * Checks that dist folder exists, and empties it
+ * If any dist folders don't exist, create them
  */
-function clearDist () {
+function createDist () {
   try {
     state.outputDirs.forEach(dir => {
-      if (fs.existsSync(dir)) {
-        fs.readdirSync(dir).forEach(file => {
-          fs.unlinkSync(path.join(dir, file))
-        })
-      } else {
+      if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir)
       }
     })
