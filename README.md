@@ -57,6 +57,14 @@ You can also Tauque without building config and readme files:
 npm install tauque
 ```
 
+To run Tauque manually:
+```shell
+npx tauque --dev # Runs Tauque in watch mode
+```
+```shell
+npx tauque # Runs a one off build
+```
+
 ### Config options
 
 A `tauque.json` config file will automatically be generated when you first install Tauque. 
